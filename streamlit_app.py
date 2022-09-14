@@ -23,13 +23,14 @@ fruits_to_show = my_fruit_list.loc[fruits_selected]
 
 # Display the table on the page.
 streamlit.dataframe(fruits_to_show)
+
 #Create a repeatable code block (called a function)
 def get_fruityvice_data(this_fruit_choice):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/" + fruit_choice)
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
-#New section to display fruitvise api respomse
+#New section to display fruitvise api response
 streamlit.header('Fruityvise Fruit Advise!')
 try:
    fruit_choice = streamlit.text_input('What fruit would you like information about?')
@@ -42,7 +43,6 @@ try:
 except URLError as e:
   streamlit.error()
 
-
 streamlit.header("The fruit load list contains:")
 #Snowflake-related functions
 def get_fruit_load_list():
@@ -50,8 +50,9 @@ def get_fruit_load_list():
          my_cur.execute("select * from fruit_load_list")
          return my_cur.fetchall()  
 
-#Add a button to load a fruit
-if streamlit.button('GET FRUIT LOAD LIST'):
+#Add a button to load the fruit
+if streamlit.button('Get Fruit Load List'):
+   my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
    my_data_rows = get_fruit_load_list()
    streamlit.dataframe(my_data_rows)
     
