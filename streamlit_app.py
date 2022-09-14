@@ -35,7 +35,7 @@ try:
        streamlit.dataframe(fruityvice_normalized)
       
 except URLError as e:
-  sttreamlit.error()
+  streamlit.error()
   
 streamlit.dataframe(fruits_to_show)
 
